@@ -1,13 +1,24 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import React, { useState, useRef, } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvent } from "react-leaflet";
 import L from "leaflet";
 
+
+function Setview({animateRef,coord}) {
+	const map = useMapEvent('click',() => {
+		map.setView(coord,map.getZoom(),{
+			animate: animateRef.current || false,
+		})
+	})
+	return null;
+}
+
 function Homepage() {
+	const animateRef = useRef(true);
+	const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
   const bus = new L.icon({
     iconUrl: require("./bus.png"),
     iconSize: [25, 25],
   });
-  const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
   function Set() {
     console.log("Hekki");
     setcoord([coord[0] + 0.0001, coord[1]]);
@@ -22,6 +33,7 @@ function Homepage() {
         <Marker icon={bus} position={coord}>
           <Popup>Bus No 30.</Popup>
         </Marker>
+	  <Setview animateRef={animateRef} coord={coord} />
       </MapContainer>
       <div>
         <button onClick={() => Set()}>Hello</button>
