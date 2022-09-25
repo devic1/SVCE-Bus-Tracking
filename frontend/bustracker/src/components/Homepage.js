@@ -3,17 +3,20 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvent } from "rea
 import L from "leaflet";
 
 
-function Setview({animateRef,coord}) {
+function Setview({coord}) {
+	console.log("ok");
+	const mp = useMap();
+	console.log(mp.getCenter());
+	mp.setView(coord);
 	const map = useMapEvent('click',() => {
 		map.setView(coord,map.getZoom(),{
-			animate: animateRef.current || false,
+			animate: true
 		})
 	})
 	return null;
 }
 
 function Homepage() {
-	const animateRef = useRef(true);
 	const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
   const bus = new L.icon({
     iconUrl: require("./bus.png"),
@@ -33,7 +36,7 @@ function Homepage() {
         <Marker icon={bus} position={coord}>
           <Popup>Bus No 30.</Popup>
         </Marker>
-	  <Setview animateRef={animateRef} coord={coord} />
+	  <Setview coord={coord} />
       </MapContainer>
       <div>
         <button onClick={() => Set()}>Hello</button>
