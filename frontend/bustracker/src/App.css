@@ -5,3 +5,14 @@
 #map {
   height: 180px;
 }
+#center {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  z-index: 1001;
+  border: none;
+  background: none;
+}
+#change {
+  display: none;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiFillCompass } from "react-icons/ai";
 import {
   MapContainer,
   TileLayer,
@@ -11,9 +12,9 @@ import L from "leaflet";
 
 function Setview({ coord, s }) {
   const mp = useMap();
-  if (s != 0) {
+  mp.removeControl(mp.zoomControl);
+  if (s !== 0) {
     mp.setView(coord, 16.4, { animate: true });
-    console.log(mp.getCenter());
   }
 
   return null;
@@ -26,7 +27,7 @@ function Homepage() {
   const fillBlueOptions = { fillColor: "blue" };
 
   const polyline = [
-    [12.950020262403736, 80.1637905233405],
+    [12.950020262403736 + 0.0002, 80.1637905233405],
     [12.950020262403736 + 0.001, 80.1637905233405],
     [12.950020262403736 + 0.002, 80.1637905233405 + 0.001],
     [12.950020262403736 + 0.003, 80.1637905233405 + 0.003],
@@ -34,8 +35,9 @@ function Homepage() {
     [12.950020262403736 + 0.005, 80.1637905233405 + 0.004],
     [12.950020262403736 + 0.006, 80.1637905233405 + 0.005],
   ];
+
   const bus = new L.icon({
-    iconUrl: require("./bus.png"),
+    iconUrl: require("./bus2.png"),
     iconSize: [17, 17],
   });
   function change() {
@@ -44,14 +46,13 @@ function Homepage() {
     console.log("ok");
   }
   function updco() {
-    if (s != 1) {
+    if (s !== 1) {
       sets(1);
     } else {
       sets(2);
     }
     setcoord(mark);
   }
-  //setInterval(change, 1000);
 
   return (
     <div>
@@ -68,8 +69,12 @@ function Homepage() {
         <Setview coord={coord} s={s} />
       </MapContainer>
       <div>
-        <button onClick={() => change()}>move</button>
-        <button onClick={() => updco()}>Center</button>
+        <button id="change" onClick={() => change()}>
+          move
+        </button>
+        <button id="center" onClick={() => updco()}>
+          <AiFillCompass size={30} />
+        </button>
       </div>
     </div>
   );
