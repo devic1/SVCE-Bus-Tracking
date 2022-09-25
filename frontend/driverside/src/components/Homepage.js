@@ -25,7 +25,6 @@ function Homepage() {
   const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
   const [mark, setmark] = useState([12.950020262403736, 80.1637905233405]);
   const [s, sets] = useState(0);
-  const fillBlueOptions = { fillColor: "blue" };
 
   const polyline = [
     [12.950020262403736 + 0.0002, 80.1637905233405],
@@ -37,6 +36,7 @@ function Homepage() {
     [12.950020262403736 + 0.006, 80.1637905233405 + 0.005],
   ];
 
+  const fillBlueOptions = { fillColor: "blue" };
   const bus = new L.icon({
     iconUrl: require("./bus2.png"),
     iconSize: [17, 17],
@@ -69,10 +69,9 @@ function Homepage() {
 
         <Setview coord={coord} s={s} />
       </MapContainer>
+
       <div>
-        <button id="change" onClick={() => change()}>
-          move
-        </button>
+        <button id="change" onClick={() => change()} />
         <button id="dropdown">
           <GiHamburgerMenu size={23} />
         </button>

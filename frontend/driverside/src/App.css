@@ -1,0 +1,44 @@
+.leaflet-container {
+  width: 100vw;
+  height: 100vh;
+}
+#map {
+  height: 100%;
+}
+
+#center {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  z-index: 1001;
+  border: none;
+  background: none;
+}
+#dropdown {
+  position: absolute;
+  background: none;
+  color: black;
+  border: none;
+  left: 2%;
+  top: 4%;
+  z-index: 1001;
+}
+.btn {
+  position: absolute;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: black;
+  border: none;
+  border-radius: 25px;
+  bottom: 10%;
+  color: white;
+  width: 80px;
+  left: 5%;
+  padding: 13px 22px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  z-index: 1000;
+}
+#change {
+  display: none;
+}
