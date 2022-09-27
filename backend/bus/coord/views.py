@@ -7,6 +7,16 @@ from .models import Coords
 
 # Create your views here.
 
+
+def Home(request):
+    context = {}
+    return render(request,"student.html",context)
+
+def Driver(request):
+    context = {}
+    return render(request,"driver.html",context)
+
+
 @api_view(['GET','POST'])
 def coord(request,pk):
     if request.method == "GET":

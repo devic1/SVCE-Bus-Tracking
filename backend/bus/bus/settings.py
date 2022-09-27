@@ -1,3 +1,4 @@
+import os
 """
 Django settings for bus project.
 
@@ -14,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+REAL_BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-e((awntjsc6u58n-lj0=)63s60n(=7rte5^+_)8@7!9hgd0z-1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,10 +56,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'bus.urls'
 
+
+STUDENT_DIR = os.path.join(REAL_BASE_DIR,'frontend','bustracker','build')
+DRIVER_DIR = os.path.join(REAL_BASE_DIR,'frontend','driverside','build')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [STUDENT_DIR,DRIVER_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STUDENT_STATIC_FILES = os.path.join(REAL_BASE_DIR,'frontend','bustracker','build','static')
+DRIVER_STATIC_FILES = os.path.join(REAL_BASE_DIR,'frontend','driverside','build','static')
+
+
+STATICFILES_DIRS = [STUDENT_STATIC_FILES,DRIVER_STATIC_FILES]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
