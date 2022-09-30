@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AiFillCompass } from "react-icons/ai";
+import { pol } from "./ar.js";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   MapContainer,
@@ -22,20 +23,12 @@ function Setview({ coord, s }) {
 }
 
 function Homepage() {
-  const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
-  const [mark, setmark] = useState([12.950020262403736, 80.1637905233405]);
+  const [coord, setcoord] = useState([12.9580902, 80.1439095]);
+  const [mark, setmark] = useState([12.9580902, 80.1439095]);
   const [s, sets] = useState(0);
   const fillBlueOptions = { fillColor: "blue" };
 
-  const polyline = [
-    [12.950020262403736 + 0.0002, 80.1637905233405],
-    [12.950020262403736 + 0.001, 80.1637905233405],
-    [12.950020262403736 + 0.002, 80.1637905233405 + 0.001],
-    [12.950020262403736 + 0.003, 80.1637905233405 + 0.003],
-    [12.950020262403736 + 0.004, 80.1637905233405 + 0.003],
-    [12.950020262403736 + 0.005, 80.1637905233405 + 0.004],
-    [12.950020262403736 + 0.006, 80.1637905233405 + 0.005],
-  ];
+  const polyline = pol;
 
   const bus = new L.icon({
     iconUrl: require("./bus2.png"),
