@@ -28,9 +28,7 @@ const routes = [];
 
 function SetViewOnClick({ animateRef }) {
   const map = useMapEvent("click", (e) => {
-    console.log(map);
-    console.log(e.latlng.lat, e.latlng.lng);
-    routes.push([e.latlng.lat, e.latlng.lng]);
+    document.getElementById("sidebar").style.width = "0%";
   });
 
   return null;
@@ -86,11 +84,8 @@ function Homepage(j) {
     setmark([mark[0] + 0.00001, mark[1]]);
     console.log("ok");
   }
-  function updmark() {
-    console.log("ok");
-  }
 
-  function vie() {
+  /*function vie() {
     let l = i + 1;
     let f2 = animatebtw(route30[l - 1], route30[l]);
     let f1 = animatebtw(route30[l - 1], f2);
@@ -101,7 +96,7 @@ function Homepage(j) {
     setmark(rt[l]);
     seti(l);
   }
-  /*function distance([at, bt]) {
+  function distance([at, bt]) {
     let s1 = Math.pow(bt[0] - at[0], 2);
     let s2 = Math.pow(bt[1] - at[1], 2);
     let s3 = Math.sqrt(s1 + s2);
@@ -117,7 +112,7 @@ function Homepage(j) {
     setcoord(mark);
   }
   return (
-    <div>
+    <div className="ma">
       <MapContainer center={coord} zoom={16.4} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -139,7 +134,12 @@ function Homepage(j) {
         <button id="change" onClick={() => change()}>
           move
         </button>
-        <button id="dropdown" onClick={() => vie()}>
+        <button
+          id="dropdown"
+          onClick={() =>
+            (document.getElementById("sidebar").style.width = "80%")
+          }
+        >
           <FaUserCircle size={23} />
         </button>
         <button id="center" onClick={() => updco()}>
