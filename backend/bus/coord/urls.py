@@ -6,4 +6,5 @@ urlpatterns = [
         path('',views.Home,name='Home'),
         path('driver',views.Driver,name="Driver"),
         path('coord/<int:pk>/',views.coord,name='coord'),
+        path('route/<int:pk>/',views.route,name="route"),
         ]

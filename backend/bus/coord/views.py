@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import Coordserializer
-from .models import Coords
+from .serializers import Coordserializer, RouteSerializer
+from .models import Coords, Routes
 
 # Create your views here.
 
@@ -20,7 +20,7 @@ def Driver(request):
 @api_view(['GET','POST'])
 def coord(request,pk):
     if request.method == "GET":
-        coord = Coords.objects.filter(ide=pk)
+        coord = Coords.objects.filter(id=pk)
         if coord.exists():
             serializer = Coordserializer(coord,many=True)
             return Response(serializer.data)
@@ -29,7 +29,7 @@ def coord(request,pk):
     elif request.method == 'POST':
         t = request.data
         print(request.data)
-        k = Coords.objects.filter(ide=t['ide'])
+        k = Coords.objects.filter(id=t['id'])
         if k.exists():
             k.update(lat=t['lat'])
             k.update(lon=t['lon'])
@@ -37,4 +37,13 @@ def coord(request,pk):
         return Response("Not ok")
 
 
+@api_view(['GET'])
+def route(request,pk):
+    if request.method == "GET":
+        route = Routes.objects.filter(id=pk)
+        if route.exists():
+            serializer = RouteSerializer(route,many=True)
+            return Response(serializer.data)
+        return Response("Not Found")
+        
 
