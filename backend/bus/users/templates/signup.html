@@ -4,15 +4,53 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <style>
+      body {
+        background-color: white;
+      }
+      label {
+        display: none;
+      }
+      .signup {
+        text-align: center;
+      }
+      input {
+        width: 60%;
+        height: 30px;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        border-color: black;
+        border-style: groove;
+        border-radius: 4px;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+      button {
+        width: 30%;
+        height: 30px;
+        margin-top: 5%;
+        border-radius: 4px;
+        background-color: black;
+        color: white;
+        border: none;
+      }
+      .signuptext {
+        font-family: "Times New Roman", Times, serif;
+        margin-top: 15%;
+        margin-bottom: 20%;
+      }
+    </style>
+    <title>Sign up</title>
   </head>
   <body>
     {% block content %}
-    <h2>Sign up</h2>
-    <form method="post">
-      {% csrf_token %} {{form.as_p}}
-      <button type="submit" value="Login">Sign up</button>
-    </form>
+    <div class="signup">
+      <h2 class="signuptext">Sign up</h2>
+      <form method="post">
+        {% csrf_token %} {{form.as_p}}
+        <button type="submit" value="Login">Sign up</button>
+      </form>
+    </div>
     {% endblock content %}
   </body>
 </html>

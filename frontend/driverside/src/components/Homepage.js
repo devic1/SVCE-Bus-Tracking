@@ -21,20 +21,28 @@ function Setview({ coord, s }) {
   return null;
 }
 
+function SetViewOnClick({ animateRef }) {
+  const map = useMapEvent("click", (e) => {
+    document.getElementById("sidebar").style.width = "0%";
+  });
+
+  return null;
+}
+
 function Homepage() {
   const [coord, setcoord] = useState([12.950020262403736, 80.1637905233405]);
   const [mark, setmark] = useState([12.950020262403736, 80.1637905233405]);
   const [s, sets] = useState(0);
+  const [rt, setrt] = useState([]);
+  useEffect(() => {
+    const ft = async () => {
+      const response = await axios.get("/route/3/");
+      setrt(response.data[0]["route"]["key"]);
+    };
+    ft();
+  }, []);
 
-  const polyline = [
-    [12.950020262403736 + 0.0002, 80.1637905233405],
-    [12.950020262403736 + 0.001, 80.1637905233405],
-    [12.950020262403736 + 0.002, 80.1637905233405 + 0.001],
-    [12.950020262403736 + 0.003, 80.1637905233405 + 0.003],
-    [12.950020262403736 + 0.004, 80.1637905233405 + 0.003],
-    [12.950020262403736 + 0.005, 80.1637905233405 + 0.004],
-    [12.950020262403736 + 0.006, 80.1637905233405 + 0.005],
-  ];
+  const polyline = rt.slice();
 
   const fillBlueOptions = { fillColor: "blue" };
   const bus = new L.icon({

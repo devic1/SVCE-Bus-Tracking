@@ -13,6 +13,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 # Create your views here.
 def activate(request,uidb64,token):
@@ -48,8 +50,26 @@ def activateemail(request,user,to_email):
 
 
 class SignUpForm(UserCreationForm):
-    username = forms.CharField(max_length=30,required=False)
-    email = forms.EmailField(max_length=254)
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input",
+        "type":"text",
+        "placeholder": "Username",
+    }),max_length=30,required=False)
+    email = forms.EmailField(widget=forms.TextInput(attrs={
+        "class": "email",
+        "type":"text",
+        "placeholder": "Email",
+    }),max_length=254)
+    password1 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "password",
+        "type":"password",
+        "placeholder":"Password",
+    }))
+    password2 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "password2",
+        "type":"password",
+        "placeholder":"Confirm password",
+    }))
 
     class Meta:
         model = User
@@ -59,11 +79,12 @@ class SignUpForm(UserCreationForm):
         username = self.cleaned_data['username'].lower()
         return username
 
-    """def clean_email(self):
+    def clean_email(self):
         email = self.cleaned_data['email']
-        if not email.endswith('@svce.ac.in'):
-            raise ValidationError("Only college mail'id Allowed")
-        return email"""
+
+        """if not email.endswith('@svce.ac.in'):
+            raise ValidationError("Only college mail'id Allowed")"""
+        return email
 
 
 
@@ -71,6 +92,11 @@ def index(request):
     if request.user.is_authenticated:
         return render(request,"./index.html")
     return HttpResponseRedirect(reverse('login'))
+
+@api_view(['GET'])
+def current_user(request):
+    user = request.user
+    return Response({'username':user.username})
 
 
 def login_user(request):
@@ -80,7 +106,7 @@ def login_user(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('Home'))
     return render(request,"./login.html")
 
 def logout_user(request):

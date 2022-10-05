@@ -1,6 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import { AiFillCompass } from "react-icons/ai";
-import { route30 } from "./rr.js";
 import { FaUserCircle } from "react-icons/fa";
 import {
   MapContainer,
@@ -24,8 +23,6 @@ function Setview({ coord, s }) {
   return null;
 }
 
-const routes = [];
-
 function SetViewOnClick({ animateRef }) {
   const map = useMapEvent("click", (e) => {
     document.getElementById("sidebar").style.width = "0%";
@@ -39,9 +36,33 @@ const bus = new L.icon({
   iconSize: [27, 27],
 });
 
-function Homepage(j) {
+function Homepage() {
+  const [coord, setcoord] = useState([12.958055492245812, 80.1441371440888]);
+  const [mark, setmark] = useState([12.958055492245812, 80.1441371440888]);
+  useEffect(() => {
+    const st = async () => {
+      const response = await axios.get("/coord/11/");
+      setmark([response.data[0]["lat"], response.data[0]["lon"]]);
+      sets(0);
+    };
+    st();
+  }, []);
+  const [s, sets] = useState(0);
+  const MINUTE_MS = 10000;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const st = async () => {
+        const response = await axios.get("/coord/11/");
+        setmark([response.data[0]["lat"], response.data[0]["lon"]]);
+        sets(0);
+      };
+      st();
+      console.log("Logs every 10 seconds");
+    }, MINUTE_MS);
+    return () => clearInterval(interval);
+  }, []);
+
   const [rt, setrt] = useState([]);
-  const [i, seti] = useState(0);
   useEffect(() => {
     const ft = async () => {
       const response = await axios.get("/route/3/");
@@ -49,24 +70,12 @@ function Homepage(j) {
     };
     ft();
   }, []);
-  const polyline = rt.slice(i);
-  const [coord, setcoord] = useState(route30[0]);
-  const [mark, setmark] = useState(route30[0]);
+
+  const polyline = rt.slice();
 
   const markerRef = useRef(null);
-  const [s, sets] = useState(0);
+
   const fillBlueOptions = { fillColor: "blue" };
-  const eventHandlers = useMemo(
-    () => ({
-      click() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          console.log(marker.getLatLng());
-        }
-      },
-    }),
-    []
-  );
 
   function animatebtw(sp, ep) {
     let sp1 = sp[0].toFixed(4);
@@ -78,11 +87,6 @@ function Homepage(j) {
     let cal2 = (parseFloat(sp2) + parseFloat(ep2)) / 2;
     //console.log(cal1, cal2);
     return [parseFloat(cal1.toFixed(4)), parseFloat(cal2.toFixed(4))];
-  }
-  function change() {
-    sets(0);
-    setmark([mark[0] + 0.00001, mark[1]]);
-    console.log("ok");
   }
 
   /*function vie() {
@@ -104,11 +108,7 @@ function Homepage(j) {
   }*/
 
   function updco() {
-    if (s !== 1) {
-      sets(1);
-    } else {
-      sets(2);
-    }
+    sets(1);
     setcoord(mark);
   }
   return (
@@ -119,21 +119,13 @@ function Homepage(j) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Polyline pathOptions={fillBlueOptions} positions={polyline} />
-        <Marker
-          icon={bus}
-          position={mark}
-          ref={markerRef}
-          eventHandlers={eventHandlers}
-        >
+        <Marker icon={bus} position={mark} ref={markerRef}>
           <Popup>Bus No 30.</Popup>
         </Marker>
         <SetViewOnClick />
         <Setview coord={coord} s={s} />
       </MapContainer>
       <div>
-        <button id="change" onClick={() => change()}>
-          move
-        </button>
         <button
           id="dropdown"
           onClick={() =>

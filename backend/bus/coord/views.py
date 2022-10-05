@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import Coordserializer, RouteSerializer
@@ -9,12 +10,18 @@ from .models import Coords, Routes
 
 
 def Home(request):
-    context = {}
-    return render(request,"student.html",context)
+    if request.user.is_authenticated:
+        context = {}
+        return render(request,"student.html",context)
+    else:
+        return HttpResponseRedirect(reverse('login'))
 
 def Driver(request):
-    context = {}
-    return render(request,"driver.html",context)
+    if request.user.is_authenticated:
+        context = {"user":user.username}
+        return render(request,"driver.html",context)
+    else:
+        return HttpResponseRedirect(reverse('login'))
 
 
 @api_view(['GET','POST'])

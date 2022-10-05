@@ -4,20 +4,75 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Login</title>
+    <style>
+      body {
+        background-color: white;
+      }
+      .sign {
+        text-align: center;
+      }
+      .signin {
+        font-family: "Times New Roman", Times, serif;
+        margin-top: 15%;
+        margin-bottom: 20%;
+      }
+      .btn {
+        width: 30%;
+        height: 35px;
+        margin-top: 8%;
+        margin-bottom: 2%;
+        border-radius: 4px;
+        background-color: black;
+        color: white;
+        border: none;
+      }
+      input {
+        width: 60%;
+        height: 30px;
+        margin-top: 4%;
+        margin-bottom: 2%;
+        border-color: black;
+        border-style: groove;
+        border-radius: 4px;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+      .lk {
+        position: absolute;
+        color: black;
+        left: 20%;
+        font-size: small;
+      }
+      .links {
+        font-size: medium;
+        color: black;
+        margin-right: 5%;
+      }
+    </style>
   </head>
   <body>
     {% block body %}
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      <input type="text" name="username" placeholder="Username" />
-      <input type="password" name="password" placeholder="Password" />
-      <input type="submit" value="Login" />
-    </form>
+    <div class="sign">
+      <h2 class="signin">Sign in</h2>
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input
+          class="ustext"
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <input type="password" name="password" placeholder="Password" />
+        <br />
+        <a class="lk" href="{% url 'reset_password' %}">Forget password</a>
+        <br />
+        <input class="btn" type="submit" value="Login" />
+      </form>
 
-    {% endblock %}
+      {% endblock %}
 
-    <h1>Hello</h1>
-    <a href="{% url 'signup' %}">Sign up</a>
+      <a class="links" href="{% url 'signup' %}">Sign up</a>
+    </div>
   </body>
 </html>
