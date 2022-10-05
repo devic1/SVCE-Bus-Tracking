@@ -18,13 +18,13 @@ def Home(request):
 
 def Driver(request):
     if request.user.is_authenticated:
-        context = {"user":user.username}
+        context = {}
         return render(request,"driver.html",context)
     else:
         return HttpResponseRedirect(reverse('login'))
 
 
-@api_view(['GET','POST'])
+@api_view(['GET','POST','PUT'])
 def coord(request,pk):
     if request.method == "GET":
         coord = Coords.objects.filter(id=pk)
@@ -33,10 +33,10 @@ def coord(request,pk):
             return Response(serializer.data)
         return Response("Not found ")
 
-    elif request.method == 'POST':
+    elif request.method == 'PUT' or request.method == 'POST':
         t = request.data
         print(request.data)
-        k = Coords.objects.filter(id=t['id'])
+        k = Coords.objects.filter(id=pk)
         if k.exists():
             k.update(lat=t['lat'])
             k.update(lon=t['lon'])

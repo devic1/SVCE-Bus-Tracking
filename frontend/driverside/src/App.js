@@ -1,11 +1,11 @@
 import "./App.css";
 import Homepage from "./components/Homepage";
-import Navigator from "./components/navigator";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
     <div>
-      <Navigator istrack={true} />
+      <Sidebar />
       <Homepage />
     </div>
   );

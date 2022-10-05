@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AiFillCompass } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import {
@@ -24,7 +24,7 @@ function Setview({ coord, s }) {
 }
 
 function SetViewOnClick({ animateRef }) {
-  const map = useMapEvent("click", (e) => {
+  useMapEvent("click", () => {
     document.getElementById("sidebar").style.width = "0%";
   });
 
@@ -77,7 +77,7 @@ function Homepage() {
 
   const fillBlueOptions = { fillColor: "blue" };
 
-  function animatebtw(sp, ep) {
+  /* function animatebtw(sp, ep) {
     let sp1 = sp[0].toFixed(4);
     let sp2 = sp[1].toFixed(4);
     let ep1 = ep[0].toFixed(4);
@@ -88,7 +88,7 @@ function Homepage() {
     //console.log(cal1, cal2);
     return [parseFloat(cal1.toFixed(4)), parseFloat(cal2.toFixed(4))];
   }
-
+*/
   /*function vie() {
     let l = i + 1;
     let f2 = animatebtw(route30[l - 1], route30[l]);
