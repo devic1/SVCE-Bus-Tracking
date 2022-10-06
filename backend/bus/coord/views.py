@@ -11,15 +11,25 @@ from .models import Coords, Routes
 
 def Home(request):
     if request.user.is_authenticated:
-        context = {}
-        return render(request,"student.html",context)
+        t = request.user.username
+        if t.startswith("driver"):
+            return HttpResponseRedirect(reverse('Driver'))
+        else:
+            context = {}
+            return render(request,"student.html",context)
     else:
         return HttpResponseRedirect(reverse('login'))
 
 def Driver(request):
     if request.user.is_authenticated:
-        context = {}
-        return render(request,"driver.html",context)
+        t = request.user.username
+        if t.startswith("driver"):
+            context = {}
+            print(request.user.username)
+            return render(request,"driver.html",context)
+        else:
+            context={}
+            return HttpResponseRedirect(reverse('Home'))
     else:
         return HttpResponseRedirect(reverse('login'))
 
