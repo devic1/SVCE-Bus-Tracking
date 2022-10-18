@@ -9,7 +9,15 @@ class Coordserializer(serializers.ModelSerializer):
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routes
-        fields = ('route','routeno')
+        fields = ('route','routeno','busstops')
 
+class BusnoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Routes
+        fields = ('id','routeno')
 
+class BusstopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Routes
+        fields = ('id','busstops')
 

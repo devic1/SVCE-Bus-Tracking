@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import Coordserializer, RouteSerializer
+from .serializers import Coordserializer, RouteSerializer, BusnoSerializer, BusstopSerializer
 from .models import Coords, Routes
 
 # Create your views here.
@@ -52,6 +52,21 @@ def coord(request,pk):
             k.update(lon=t['lon'])
             return Response("ok")
         return Response("Not ok")
+
+@api_view(['GET'])
+def busno(request):
+    if request.method == "GET":
+        busno = Routes.objects.filter().values('id','routeno')
+        serializer = BusnoSerializer(busno,many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def busstop(request,k):
+    if request.method == "GET":
+        busstop = Routes.objects.get(routeno=k).busstops["key"]
+        if True:
+            return Response(busstop)
+        return HttpResponse(False)
 
 
 @api_view(['GET'])

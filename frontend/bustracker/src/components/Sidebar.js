@@ -2,7 +2,49 @@ import React, { useEffect, useState } from "react";
 import { GiCancel } from "react-icons/gi";
 import axios from "axios";
 
+function Numberlist(props) {
+  const numbers = props.numbers;
+  return numbers.map((ele) => (
+    <option value={ele[1]} key={ele[0]}>
+      {ele[1].substring(1, ele[1].length - 1)}
+    </option>
+  ));
+}
+function BusstopnameList(props) {
+  const stops = props.stops;
+  return stops.map((ele, index) => (
+    <option value={ele} key={index}>
+      {ele}
+    </option>
+  ));
+}
+
 function Sidebar() {
+  const [busno, setbusno] = useState([]);
+  const [selected, setselected] = useState(
+    JSON.stringify("Bus No : 1 Tiruvotriyur")
+  );
+  const [bustopname, setbustopname] = useState();
+  const [stopname, setstopname] = useState([1, 2, 3]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("busroutes")) {
+      const fr = async () => {
+        const rep = await axios.get("/coord/busno");
+        let t = Object.keys(rep.data).length;
+        var ar = [];
+        for (let index = 2; index < t; index++) {
+          ar.push([rep.data[index]["id"], rep.data[index]["routeno"]]);
+        }
+        localStorage.setItem("busroutes", JSON.stringify(ar));
+        setbusno(ar);
+      };
+      fr();
+    } else {
+      var x = localStorage.getItem("busroutes");
+      setbusno(JSON.parse(x));
+    }
+  }, []);
   const [user, setuser] = useState("Username");
   useEffect(() => {
     const ft = async () => {
@@ -11,9 +53,19 @@ function Sidebar() {
     };
     ft();
   }, [user]);
+  useEffect(() => {
+    const ft = async () => {
+      const response = await axios.get("/coord/busno/" + selected);
+      setstopname(response.data);
+      setbustopname(response.data[0]);
+    };
+    ft();
+  }, [selected]);
+
   function logout() {
     window.location.href = "http://127.0.0.1:8000/users/logout";
   }
+
   return (
     <div id="sidebar">
       <div>
@@ -36,22 +88,30 @@ function Sidebar() {
       <div className="username">{user}</div>
       <div className="busno">
         <div className="text">Bus No</div>
-        <select id="bus" name="busno">
-          <option value="7">30</option>
-          <option value="5">39</option>
-          <option value="2">46</option>
-          <option value="3">9</option>
+
+        <select
+          id="bus"
+          onChange={(event) => {
+            setselected(event.target.value);
+          }}
+        >
+          <Numberlist numbers={busno} />
         </select>
       </div>
       <div className="text">BusStop Name</div>
       <div className="Stopno">
-        <select id="stop" name="stopno">
-          <option value="7">Chromphet bus stand</option>
-          <option value="5">Kundrathur</option>
-          <option value="2">Palavanthangal</option>
-          <option value="3">kfc</option>
+        <select
+          id="stop"
+          name="stopno"
+          value={bustopname}
+          onChange={(event) => {
+            setbustopname(event.target.value);
+          }}
+        >
+          <BusstopnameList stops={stopname} />
         </select>
       </div>
+
       <button
         className="logout"
         onClick={() => logout()}

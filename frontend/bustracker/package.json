@@ -13,6 +13,7 @@
     "leaflet-routing-machine": "^3.2.12",
     "leaflet.animatedmarker": "^1.0.0",
     "leaflet.marker.slideto": "^0.3.0",
+    "leaflet.motion": "^0.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
