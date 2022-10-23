@@ -88,13 +88,6 @@
 .busno {
   margin-bottom: 10%;
 }
-#stop {
-  width: 60%;
-  height: 30px;
-  background-color: white;
-  color: black;
-  margin-bottom: 10%;
-}
 
 .logout {
   width: 35%;
@@ -114,5 +107,22 @@
   border: none;
   left: 3%;
   top: 4%;
+  z-index: 1001;
+}
+
+.tr {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  z-index: 1001;
+  border-radius: 25px;
+  background-color: black;
+  color: white;
+  border: none;
+  width: 80px;
+  text-align: center;
+  height: 30px;
+  border-style: groove;
+  position: absolute;
   z-index: 1001;
 }

@@ -36,28 +36,23 @@ function Homepage() {
   const [mark, setmark] = useState([12.950020262403736, 80.1637905233405]);
   const [s, sets] = useState(0);
   const [rt, setrt] = useState([]);
-  useEffect(() => {
-    const st = async () => {
-      console.log("ok");
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        console.log("ok");
-      }
-      function showPosition(position) {
-        setmark([position.coords.latitude, position.coords.longitude]);
-        setcoord(mark);
-      }
-    };
-    st();
-  }, []);
+  const [tr, settr] = useState(true);
+  const [inte, setinte] = useState();
 
-  const MINUTE_MS = 2000;
-  useEffect(() => {
+  function Track() {
+    settr(false);
+    const MINUTE_MS = 5000;
+    function errors(err) {
+      console.log("error");
+    }
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+    };
     const interval = setInterval(() => {
       sets(0);
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, errors, options);
       } else {
         console.log("ok");
       }
@@ -68,16 +63,20 @@ function Homepage() {
           lon: position.coords.longitude,
           routeno: '"30/39"',
         };
-
+        console.log(k);
         const st = async () => {
           await axios.put("coord/11/", k);
         };
         st();
       }
     }, MINUTE_MS);
-    return () => clearInterval(interval);
-  }, []);
+    setinte(interval);
+  }
 
+  function Stoptrack() {
+    clearInterval(inte);
+    settr(true);
+  }
   useEffect(() => {
     const ft = async () => {
       const response = await axios.get("/route/3/");
@@ -97,6 +96,25 @@ function Homepage() {
   function updco() {
     sets(1);
     setcoord(mark);
+  }
+  function Nice() {
+    if (tr) {
+      return (
+        <div>
+          <button id="track" className="tr" onClick={() => Track()}>
+            Track
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <button id="stop" className="tr" onClick={() => Stoptrack()}>
+            Stop
+          </button>
+        </div>
+      );
+    }
   }
 
   return (
@@ -123,6 +141,9 @@ function Homepage() {
         >
           <FaUserCircle size={23} />
         </button>
+        <div>
+          <Nice />
+        </div>
         <button id="center" onClick={() => updco()}>
           <AiFillCompass size={30} />
         </button>
