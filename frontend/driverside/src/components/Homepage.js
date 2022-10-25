@@ -65,6 +65,8 @@ function Homepage() {
         };
         console.log(k);
         const st = async () => {
+          axios.defaults.xsrfCookieName = "csrftoken";
+          axios.defaults.xsrfHeaderName = "X-CSRFToken";
           await axios.put("coord/11/", k);
         };
         st();
