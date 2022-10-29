@@ -1,10 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'media/tico.ico' %}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <meta name="SVCE Bus Tracker" content="Bus Tracking App Made For SVCE" />
+    <title>SVCE Bus</title>
     <style>
       body {
         background-color: white;
@@ -14,8 +17,12 @@
       }
       .signin {
         font-family: "Times New Roman", Times, serif;
+        font-size: 50px;
         margin-top: 15%;
         margin-bottom: 20%;
+      }
+      .sig {
+        font-size: 30px;
       }
       .btn {
         width: 30%;
@@ -29,8 +36,9 @@
       }
       input {
         width: 60%;
+        padding-left: 6px;
         height: 30px;
-        margin-top: 4%;
+        margin-top: 6%;
         margin-bottom: 2%;
         border-color: black;
         border-style: groove;
@@ -44,6 +52,9 @@
         left: 20%;
         font-size: small;
       }
+      a {
+        margin-top: 5px;
+      }
       .links {
         font-size: medium;
         color: black;
@@ -54,7 +65,8 @@
   <body>
     {% block body %}
     <div class="sign">
-      <h2 class="signin">Sign in</h2>
+      <h2 class="signin">SVCE BUS</h2>
+      <h3 class="sig">Sign in</h3>
       <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <input

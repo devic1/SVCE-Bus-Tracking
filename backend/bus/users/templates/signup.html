@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'media/tico.ico' %}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="SVCE Bus Tracker" content="Bus Tracking App Made For SVCE" />
+    <title>SVCE Bus</title>
     <style>
       body {
         background-color: white;
@@ -14,10 +18,17 @@
       .signup {
         text-align: center;
       }
+      .signuptext {
+        font-size: 40px;
+      }
+      .sig {
+        font-size: 30px;
+      }
       input {
         width: 60%;
         height: 30px;
         margin-top: 2%;
+        padding-left: 6px;
         margin-bottom: 2%;
         border-color: black;
         border-style: groove;
@@ -39,17 +50,27 @@
         margin-top: 15%;
         margin-bottom: 20%;
       }
+      .warn {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 5%;
+      }
     </style>
-    <title>Sign up</title>
   </head>
   <body>
     {% block content %}
     <div class="signup">
-      <h2 class="signuptext">Sign up</h2>
+      <h2 class="signuptext">SVCE BUS</h2>
+      <h3 class="sig">Sign Up</h3>
       <form method="post">
         {% csrf_token %} {{form.as_p}}
         <button type="submit" value="Login">Sign up</button>
       </form>
+
+      <div class="warn">
+        <p>!!! Verify Your Email address to Sign in</p>
+      </div>
     </div>
     {% endblock content %}
   </body>
