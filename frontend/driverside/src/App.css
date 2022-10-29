@@ -19,7 +19,7 @@
   background: none;
   color: black;
   border: none;
-  left: 2%;
+  left: 6%;
   top: 4%;
   z-index: 1001;
 }
@@ -56,10 +56,8 @@
   text-align: center;
   z-index: 1002;
 }
-.avataricon {
-  width: 35%;
-  height: auto;
-  margin-top: 15%;
+.usericon {
+  margin-top: 25%;
   border-radius: 20%;
   margin-bottom: 2%;
 }
@@ -67,7 +65,7 @@
   margin-top: 20%;
   margin-bottom: 5%;
   color: black;
-  font-size: large;
+  font-size: 30px;
   font-family: sans-serif;
   font-weight: bolder;
   letter-spacing: 1px;
@@ -80,24 +78,22 @@
   margin-bottom: 2%;
 }
 #bus {
-  width: 40%;
-  height: 30px;
+  margin-top: 20px;
+  width: 80%;
+  height: 40px;
   background-color: white;
   color: black;
 }
-.busno {
-  margin-bottom: 10%;
-}
 
 .logout {
+  margin-top: 100px;
   width: 35%;
   height: 35px;
   background-color: white;
   border-color: black;
   border-radius: 2px;
-  margin-top: 5%;
   font-family: sans-serif;
-  font-size: small;
+  font-size: large;
   margin-bottom: 5%;
 }
 #cancel {
@@ -105,9 +101,16 @@
   background: none;
   color: black;
   border: none;
-  left: 3%;
+  left: 6%;
   top: 4%;
   z-index: 1001;
+}
+
+select {
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: medium;
 }
 
 .tr {
@@ -118,10 +121,11 @@
   border-radius: 25px;
   background-color: black;
   color: white;
-  border: none;
-  width: 80px;
+  border: black;
+  width: 100px;
+  font-size: medium;
   text-align: center;
-  height: 30px;
+  height: 40px;
   border-style: groove;
   position: absolute;
   z-index: 1001;

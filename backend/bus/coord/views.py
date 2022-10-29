@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import Coordserializer, RouteSerializer, BusnoSerializer, BusstopSerializer
 from .models import Coords, Routes
+
 
 # Create your views here.
 
@@ -19,6 +20,11 @@ def Home(request):
             return render(request,"student.html",context)
     else:
         return HttpResponseRedirect(reverse('login'))
+
+def Tico(request):
+    img = open('./tico.ico','rb')
+    response = FileResponse(img)
+    return response
 
 def Driver(request):
     if request.user.is_authenticated:
@@ -35,9 +41,9 @@ def Driver(request):
 
 
 @api_view(['GET','POST','PUT'])
-def coord(request,pk):
+def coord(request,rt):
     if request.method == "GET":
-        coord = Coords.objects.filter(id=pk)
+        coord = Coords.objects.filter(routeno=rt)
         if coord.exists():
             serializer = Coordserializer(coord,many=True)
             return Response(serializer.data)
@@ -46,7 +52,7 @@ def coord(request,pk):
     elif request.method == 'PUT' or request.method == 'POST':
         t = request.data
         print(request.data)
-        k = Coords.objects.filter(id=pk)
+        k = Coords.objects.filter(routeno=rt)
         if k.exists():
             k.update(lat=t['lat'])
             k.update(lon=t['lon'])

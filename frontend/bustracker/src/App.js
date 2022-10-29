@@ -1,12 +1,19 @@
 import "./App.css";
+import Appcontext from "./components/Appcontext";
 import Homepage from "./components/Homepage";
 import Sidebar from "./components/Sidebar";
+import { useState } from "react";
 
 function App() {
+  const [selbus, setselbus] = useState(
+    JSON.stringify("Bus No : 1 Tiruvotriyur")
+  );
   return (
     <div>
-      <Sidebar />
-      <Homepage />
+      <Appcontext.Provider value={{ selbus, setselbus }}>
+        <Sidebar />
+        <Homepage />
+      </Appcontext.Provider>
     </div>
   );
 }

@@ -6,7 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 class Coords(models.Model):
     lat = models.DecimalField(max_digits=39,decimal_places=18)
     lon = models.DecimalField(max_digits=39,decimal_places=18)
-    routeno = models.CharField(null=True,max_length=20)
+    routeno = models.CharField(null=True,max_length=60)
     
 
     def __str__(self):

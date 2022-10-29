@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #myapp
+    'sslserver',
     'users',
     'coord',
     'rest_framework',

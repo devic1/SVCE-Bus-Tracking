@@ -15,6 +15,8 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import Busno
+from .serializers import BusnoSerializer
 
 # Create your views here.
 def activate(request,uidb64,token):
@@ -98,6 +100,28 @@ def current_user(request):
     user = request.user
     return Response({'username':user.username})
 
+@api_view(['GET','PUT'])
+def Busstop(request):
+    user = request.user
+    if user.is_authenticated:
+        t = Busno.objects.filter(ad=user)
+        l = request.data
+        if request.method == "GET":
+            if t.exists():
+                Serializer = BusnoSerializer(t,many=True)
+                return Response(Serializer.data)
+            else:
+                k = Busno(ad=user)
+                k.save()
+                Serializer = BusnoSerializer(Busno.objects.filter(ad=user),many=True)
+                return Response(Serializer.data)
+        else:
+            t.update(busno=l["busno"])
+            t.update(stopname=l["stopname"])
+            return Response("updated")
+    l = Busno.objects.filter(ad="testuser1")
+    Serializer = BusnoSerializer(l,many=True)
+    return Response(Serializer.data)
 
 def login_user(request):
     if request.method == "POST":

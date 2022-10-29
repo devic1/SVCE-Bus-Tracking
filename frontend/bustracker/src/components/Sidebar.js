@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GiCancel } from "react-icons/gi";
 import axios from "axios";
+import Appcontext from "./Appcontext";
 
 function Numberlist(props) {
   const numbers = props.numbers;
@@ -21,9 +22,7 @@ function BusstopnameList(props) {
 
 function Sidebar() {
   const [busno, setbusno] = useState([]);
-  const [selected, setselected] = useState(
-    JSON.stringify("Bus No : 1 Tiruvotriyur")
-  );
+  const { selbus, setselbus } = useContext(Appcontext);
   const [bustopname, setbustopname] = useState();
   const [stopname, setstopname] = useState([1, 2, 3]);
 
@@ -45,6 +44,7 @@ function Sidebar() {
       setbusno(JSON.parse(x));
     }
   }, []);
+
   const [user, setuser] = useState("Username");
   useEffect(() => {
     const ft = async () => {
@@ -53,14 +53,42 @@ function Sidebar() {
     };
     ft();
   }, [user]);
+
+  useEffect(() => {
+    const st = async () => {
+      const response = await axios.get("/users/busno");
+      setselbus(response.data[0]["busno"]);
+    };
+    st();
+    //eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     const ft = async () => {
-      const response = await axios.get("/coord/busno/" + selected);
+      const response = await axios.get("/coord/busno/" + selbus);
       setstopname(response.data);
       setbustopname(response.data[0]);
     };
+
     ft();
-  }, [selected]);
+    //eslint-disable-next-line
+  }, [selbus]);
+  useEffect(() => {
+    const k = {
+      ad: user,
+      busno: selbus,
+      stopname: bustopname,
+    };
+    const st = async () => {
+      axios.defaults.xsrfCookieName = "csrftoken";
+      axios.defaults.xsrfHeaderName = "X-CSRFToken";
+      await axios.put("/users/busno", k);
+    };
+    st().catch((e) => {
+      setselbus(selbus);
+    });
+    //eslint-disable-next-line
+  }, [selbus]);
 
   function logout() {
     window.location.href = "http://127.0.0.1:8000/users/logout";
@@ -71,18 +99,20 @@ function Sidebar() {
       <div>
         <button
           id="cancel"
+          title="Cancel"
           onClick={() => {
             document.getElementById("sidebar").style.width = "0%";
           }}
         >
-          <GiCancel size={23} />
+          <GiCancel size={33} />
         </button>
       </div>
       <div className="usericon">
         <img
-          src="https://cdn.discordapp.com/attachments/758938874466009101/1026863658325778482/unknown.png"
-          alt="Avatar"
-          className="avataricon"
+          id="avataricon"
+          width={150}
+          alt="Profile Avatar"
+          src={`https://avatars.dicebear.com/api/bottts/${user}.png`}
         />
       </div>
       <div className="username">{user}</div>
@@ -91,8 +121,10 @@ function Sidebar() {
 
         <select
           id="bus"
+          title="Busno"
+          value={selbus}
           onChange={(event) => {
-            setselected(event.target.value);
+            setselbus(event.target.value);
           }}
         >
           <Numberlist numbers={busno} />
@@ -102,6 +134,7 @@ function Sidebar() {
       <div className="Stopno">
         <select
           id="stop"
+          title="Bustop"
           name="stopno"
           value={bustopname}
           onChange={(event) => {
