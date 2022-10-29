@@ -54,7 +54,6 @@ function Homepage() {
   const [tr, settr] = useState(true);
   const [inte, setinte] = useState();
   const { selbus, setselbus } = useContext(Appcontext);
-  console.log(selbus);
   useEffect(() => {
     if (tr === false) {
       clearInterval(inte);
@@ -77,7 +76,6 @@ function Homepage() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, errors, options);
       } else {
-        console.log("ok");
         if (MINUTE_MS === 100000) {
           setselbus("100secs detected");
         }
@@ -88,11 +86,9 @@ function Homepage() {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         };
-        console.log(k);
         const st = async () => {
           axios.defaults.xsrfCookieName = "csrftoken";
           axios.defaults.xsrfHeaderName = "X-CSRFToken";
-          console.log(selbus);
           await axios.put("coord/" + selbus + "/", k);
         };
         st();

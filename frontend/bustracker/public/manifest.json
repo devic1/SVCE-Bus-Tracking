@@ -1,6 +1,7 @@
 {
   "short_name": "SVCE Bus",
   "name": "SVCE Bus Tracking App",
+  "description": "Bus Tracking App For SVCE",
   "icons": [
     {
       "src": "tico.ico",

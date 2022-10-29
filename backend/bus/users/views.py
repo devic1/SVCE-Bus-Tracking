@@ -117,7 +117,6 @@ def Busstop(request):
                 return Response(Serializer.data)
         else:
             t.update(busno=l["busno"])
-            t.update(stopname=l["stopname"])
             return Response("updated")
     l = Busno.objects.filter(ad="testuser1")
     Serializer = BusnoSerializer(l,many=True)

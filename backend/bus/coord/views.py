@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -20,11 +20,6 @@ def Home(request):
             return render(request,"student.html",context)
     else:
         return HttpResponseRedirect(reverse('login'))
-
-def Tico(request):
-    img = open('./tico.ico','rb')
-    response = FileResponse(img)
-    return response
 
 def Driver(request):
     if request.user.is_authenticated:

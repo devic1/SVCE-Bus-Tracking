@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
         path('',views.Home,name='Home'),
-        path('tico.ico',views.Tico,name="tico"),
         path('driver',views.Driver,name="Driver"),
         path('coord/<str:rt>/',views.coord,name='coord'),
         path('coord/busno',views.busno,name='busno'),

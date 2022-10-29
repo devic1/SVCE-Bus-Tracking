@@ -46,7 +46,7 @@ function Sidebar() {
 
   function logout() {
     console.log(selbus);
-    window.location.href = "http://127.0.0.1:8000/users/logout";
+    window.location.href = "/users/logout";
   }
 
   return (

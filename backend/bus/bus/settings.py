@@ -135,6 +135,8 @@ DRIVER_STATIC_FILES = os.path.join(REAL_BASE_DIR,'frontend','driverside','build'
 
 STATICFILES_DIRS = [STUDENT_STATIC_FILES,DRIVER_STATIC_FILES]
 
+STATIC_ROOT = os.path.join(BASE_DIR,"assets")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
