@@ -12,6 +12,7 @@ import {
 import L from "leaflet";
 import axios from "axios";
 import Appcontext from "./Appcontext";
+import NoSleep from "nosleep.js";
 
 function Setview({ coord, s }) {
   const mp = useMap();
@@ -46,7 +47,15 @@ function SetViewOnClick() {
 
   return null;
 }
-
+var noSleep = new NoSleep();
+document.addEventListener(
+  "click",
+  function enableNoSleep() {
+    document.removeEventListener("click", enableNoSleep, false);
+    noSleep.enable();
+  },
+  false
+);
 function Homepage() {
   const [coord, setcoord] = useState([12.986881275665127, 79.97068405146092]);
   const [mark, setmark] = useState([12.9885, 79.97483]);
