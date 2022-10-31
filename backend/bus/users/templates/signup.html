@@ -50,12 +50,6 @@
         margin-top: 15%;
         margin-bottom: 20%;
       }
-      .warn {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 5%;
-      }
     </style>
   </head>
   <body>
@@ -67,10 +61,6 @@
         {% csrf_token %} {{form.as_p}}
         <button type="submit" value="Login">Sign up</button>
       </form>
-
-      <div class="warn">
-        <p>!!! Verify Your Email address to Sign in</p>
-      </div>
     </div>
     {% endblock content %}
   </body>
