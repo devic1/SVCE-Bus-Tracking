@@ -136,6 +136,9 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))
 
+def activate_page(request):
+    return render(request,"./activate_page.html")
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -144,7 +147,7 @@ def signup(request):
             user.is_active=False
             user.save()
             activateemail(request,user,form.cleaned_data.get('email'))
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('activate_page'))
     else:
         form = SignUpForm()
     return render(request,"./signup.html",{'form':form})

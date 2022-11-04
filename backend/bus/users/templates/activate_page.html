@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'media/tico.ico' %}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="SVCE Bus Tracker" content="Bus Tracking App Made For SVCE" />
+    <title>SVCE Bus</title>
+    <style>
+      body {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    {% block body %}
+    <h2>Signedup Successfully <h2/>
+    <p>Check your email for Account activation<p/>
+    <p>if mail is not recieved kindly check your Spam folder <p/>
+      {% endblock %}
+
+  </body>
+</html>

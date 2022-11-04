@@ -22,12 +22,14 @@ REAL_BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e((awntjsc6u58n-lj0=)63s60n(=7rte5^+_)8@7!9hgd0z-1'
+
+with open(os.path.join(BASE_DIR,'secret_key.txt')) as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['svce.tk','www.svce.tk']
 
 
 # Application definition
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #myapp
-    'sslserver',
+    #'sslserver',
     'users',
     'coord',
     'rest_framework',
@@ -135,7 +137,7 @@ DRIVER_STATIC_FILES = os.path.join(REAL_BASE_DIR,'frontend','driverside','build'
 
 STATICFILES_DIRS = [STUDENT_STATIC_FILES,DRIVER_STATIC_FILES]
 
-STATIC_ROOT = os.path.join(BASE_DIR,"assets")
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -154,5 +156,14 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'devictor219@gmail.com'
 EMAIL_HOST_PASSWORD = 'pkdeanmlvclvvxqm'
 
+#https settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+
+#hsts settings
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
